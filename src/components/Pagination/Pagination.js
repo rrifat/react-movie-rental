@@ -7,8 +7,10 @@ function Pagination(props) {
 
   if (totalPages === 1) return null;
 
-  // Other option is to use lodash package
-  // _.range(1, totalPages+1) => [1,2,3]
+  /**
+   * Other option is to use lodash package
+   * _.range(1, totalPages+1) => [1,2,3]
+   */
   let pages = [];
   for (let index = 1; index <= totalPages; index++) {
     pages.push(index);
@@ -19,7 +21,7 @@ function Pagination(props) {
       <ul className="pagination">
         {pages.map(page => (
           <li
-            className={"page-item " + (page === currentPage ? "active" : "")}
+            className={"page-item" + (page === currentPage ? " active" : "")}
             key={page}
           >
             <a className="page-link" onClick={() => onPageChange(page)}>
