@@ -24,9 +24,9 @@ function Pagination(props) {
             className={"page-item" + (page === currentPage ? " active" : "")}
             key={page}
           >
-            <a className="page-link" onClick={() => onPageChange(page)}>
+            <button className="page-link" onClick={() => onPageChange(page)}>
               {page}
-            </a>
+            </button>
           </li>
         ))}
       </ul>

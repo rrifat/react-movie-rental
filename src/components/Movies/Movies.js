@@ -48,9 +48,10 @@ class Movies extends Component {
     this.setState({ selectedGenre: genre, currentPage: 1 });
   }
 
-  handleSort(path) {
-    this.setState({ sortColumn: { path, order: "asc" } });
+  handleSort(sortColumn) {
+    this.setState({ sortColumn });
   }
+
   componentDidMount() {
     const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
     this.setState({
@@ -99,6 +100,7 @@ class Movies extends Component {
           <h5 className="text-center mb-5">{tableTitle}</h5>
           <MoviesTable
             moviesPerPage={moviesPerPage}
+            sortColumn={sortColumn}
             onLike={this.handleLikedValue}
             onDelete={this.handleDeleteMovie}
             onSort={this.handleSort}
