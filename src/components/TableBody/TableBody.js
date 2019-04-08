@@ -1,8 +1,7 @@
 import React from "react";
 import _ from "lodash";
 
-function TableBody(props) {
-  const { movies, columns } = props;
+function TableBody({ movies, columns }) {
   return (
     <tbody>
       {movies.map(movie => (
@@ -25,7 +24,8 @@ function renderContent(movie, column) {
    * when need to access nested property like movie["genre.name"] we can't
    * that's the reason to use _.get(movie, "title") lodash property
    */
-  else return _.get(movie, column.path); 
+
+  return _.get(movie, column.path);
 }
 
 export default TableBody;

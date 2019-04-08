@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { getMovies } from "../../services/fake-movie-service";
 import Pagination from "../Pagination/Pagination";
-import paginate from "../utils/paginate";
 import Genres from "../Genres/Genres";
 import { getGenres } from "../../services/fake-genre-service";
 import MoviesTable from "../MoviesTable/MoviesTable";
-import { sortBy } from "../utils/sort";
+import * as utils from "../utils/utils";
 
 class Movies extends Component {
   constructor(props) {
@@ -61,31 +60,12 @@ class Movies extends Component {
   }
 
   render() {
-    const {
-      movies,
-      currentPage,
-      itemsPerPage,
-      selectedGenre,
-      sortColumn
-    } = this.state;
-
-    const filteredMovies =
-      selectedGenre && selectedGenre._id
-        ? movies.filter(movie => movie.genre._id === selectedGenre._id)
-        : movies;
-
-    /**
-     * could use _.orderBy(filteredMovies, [sortColumn.path], [sortColumn.order])
-     * to serve the same purpose which returns a sorted array
-     */
-    sortBy(filteredMovies, sortColumn.path, sortColumn.order);
-
+    const { currentPage, itemsPerPage, sortColumn } = this.state;
+    const { moviesPerPage, filteredMoviesLength } = getPageData(this.state);
     const tableTitle =
-      filteredMovies.length === 0
+      filteredMoviesLength === 0
         ? "There are no movies in the database"
-        : `Showing ${filteredMovies.length} movies in the database`;
-
-    const moviesPerPage = paginate(filteredMovies, currentPage, itemsPerPage);
+        : `Showing ${filteredMoviesLength} movies in the database`;
 
     return (
       <div className="Movies row">
@@ -106,7 +86,7 @@ class Movies extends Component {
             onSort={this.handleSort}
           />
           <Pagination
-            totalMovies={filteredMovies.length}
+            totalMovies={filteredMoviesLength}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
@@ -118,3 +98,35 @@ class Movies extends Component {
 }
 
 export default Movies;
+
+function getPageData(state) {
+  const {
+    movies,
+    selectedGenre,
+    sortColumn,
+    currentPage,
+    itemsPerPage
+  } = state;
+
+  const filteredMovies =
+    selectedGenre && selectedGenre._id
+      ? movies.filter(movie => movie.genre._id === selectedGenre._id)
+      : movies;
+
+  /**
+   * could use _.orderBy(filteredMovies, [sortColumn.path], [sortColumn.order])
+   * to serve the same purpose which returns a sorted array
+   */
+  utils.sortBy(filteredMovies, sortColumn.path, sortColumn.order);
+
+  const moviesPerPage = utils.paginate(
+    filteredMovies,
+    currentPage,
+    itemsPerPage
+  );
+
+  return {
+    moviesPerPage,
+    filteredMoviesLength: filteredMovies.length
+  };
+}
