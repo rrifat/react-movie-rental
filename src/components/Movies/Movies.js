@@ -4,7 +4,7 @@ import Pagination from "../Pagination/Pagination";
 import Genres from "../Genres/Genres";
 import { getGenres } from "../../services/fake-genre-service";
 import MoviesTable from "../MoviesTable/MoviesTable";
-import * as utils from "../utils/utils";
+import * as utils from "../../utils/utils";
 
 class Movies extends Component {
   constructor(props) {

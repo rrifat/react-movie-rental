@@ -7,6 +7,7 @@ import NotFound from "./components/NotFound/NotFound";
 import { Route, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import MovieForm from "./components/MovieForm/MovieForm";
+import LoginForm from "./components/LoginForm/LoginForm";
 
 class App extends Component {
   constructor() {
@@ -28,6 +29,7 @@ class App extends Component {
           <Route path="/movies" component={Movies} />
           <Route path="/customers" component={Customers} />
           <Route path="/rental" component={Rental} />
+          <Route path="/login" component={LoginForm} />
           <Route path="/not-found" component={NotFound} />
 
           <Redirect from="/" to="/movies" exact />
